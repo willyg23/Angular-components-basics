@@ -1,0 +1,113 @@
+
+<p>home works!</p>
+<!-- double brackets binds the propery(title) to html -->
+<h1>{{title}}</h1>
+
+<!--bind our typescript data to this attribute in HTML by wrapping it in square brackets -->
+<!-- you could do [disabled] = "false"(boolean value). 
+but doing [disabled] = "clicked"(property) makes the button toggle as needed -->
+<button [disabled]="clicked" (click)="handleClick()">Click Me</button> 
+<!-- parenthesis around the second ^^click, bind to the click event on this button 
+we then pass it a function defined in our typeScript to handle this event-->
+
+
+<!-- directive starting with a * == structural directive
+meaning it controls how elements are rendered in the DOM -->
+
+<!-- 
+<div *ngIf="clicked">  div will only be rendered if right-hand side resolved to true    
+    <h3>{{boat.name}}</h3>
+
+    <img [src]="boat.img" alt="boat image" width = "200px">
+
+    <p>Built in {{boat.year}}</p>
+</div>
+
+ -->
+
+
+
+<!-- 
+The div that the *ngFor directive is attached to will
+be rendered for each item in the array boats -->
+<div *ngFor="let boat of boats | async"> 
+
+
+    <app-boat [boat]="boat" ></app-boat> 
+    <!-- extracts this into the boat component
+        home component cares about fetching data, boat cares about presenting it
+    -->
+
+
+    <!--here we use the ngClass directive to decide 
+    which css class gets applied to the h3 title, based on boat.name-->
+    <!-- <h3 [ngClass]="{
+        'green': boat.name === 'StarFire',
+        'red'  : boat.name === 'Oracle'
+    }">
+        
+        {{boat.name}}</h3>
+
+    <img [src]="boat.img" alt="boat image" appMagnifier>
+
+    <p>Built in {{boat.year | year}}</p> -->
+    <!-- 
+        {{boat.year | year}}
+        takes value boat.year
+        puts it through the pipe 'year'
+        prints the value returned from the pipe
+    
+    -->
+
+</div>
+
+
+<!-- pipes
+
+At it's core a pipe is very simple:
+    it's a function that takes in a value, and spits out another value
+
+
+good for writing re-usable code
+always used in an interpolated value in the html 
+    interpolation == "Interpolation refers to embedding expressions into marked up text. 
+    By default, interpolation uses the double curly braces {{ and }} as delimiters."
+
+
+ -->
+
+
+
+<!-- uses the built in number pipe, rounds the number down to 3 decimals -->
+{{23.23232323 | number}} 
+
+<!-- 
+angular has some decent built in pipes
+real power comes from creating your own custom pipes
+someone might have already wrote the use case you need, so check out the angular pipes github repo first -->
+
+<!-- async pipe
+web applications are constantly fetching data asynchronously as a promise or an observable
+the async pipe allows you to do this automatically in a predictable way, directly in the html  -->
+
+<!--
+console command for creating a custom pipe
+ng g pipe (name)
+-->
+
+
+
+
+<!-- 
+an important concept for angular developers:
+never touch the DOM
+(changing the innerHTML of something)
+ex:
+changeTitle(){
+    document.querySelector('#title').innerHTML = 'Touched the DOM!'
+}
+
+if you want to do server-side rendering or build a native mobile app, this code won't work
+because the DOM doesn't exist on other platforms
+this is why libraries like jQuery are generally discouraged in Angular 
+-->
